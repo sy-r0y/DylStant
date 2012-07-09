@@ -1,0 +1,43 @@
+<!--
+    An AJAX based instant search, a'la Google Instant(with the non-sensical bob dylan reference;)!!! )
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<title> Subtarranean Homesick Blues...</title>
+<script>
+function getHint(text)
+{
+  if(text.length==0)
+    {
+      document.getElementById('hint').innerHTML="";
+      return;
+    }
+    if(window.XMLHttpRequest)
+    {
+      xmlhttp=new XMLHttpRequest();
+    }
+  else
+    {
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); // In case user has IE5/6 browser,
+    }
+  xmlhttp.onreadystatechange=function(){
+      if(xmlhttp.status==200 && xmlhttp.readyState==4)
+	{
+	  document.getElementById('hint').innerHTML=xmlhttp.responseText;
+	}
+  }
+  xmlhttp.open("GET","suggestions.php?q="+text,true);
+  xmlhttp.send();
+}
+</script>
+</head>
+<body>
+<h1><i> Johnny's in the basement...</i></h1>
+<br/><br/>
+<form action="">
+   Title : <input type="text" id="txt" onkeyup="getHint(this.value);" />
+</form>
+<br/><div style="color:green;" align="center" id="hint"></div>
+</body>
+</html>
